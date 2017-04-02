@@ -28,13 +28,12 @@ RUN apt-get autoclean && apt-get autoremove && apt-get update && \
         pkg-config \
         pwgen \
         python \
-        tor \
         unzip \
         wget \
         zlib1g-dev \
     ' && \
     apt-get -qqy install --no-install-recommends build-essential \
-        $build_deps && \
+        $build_deps tor && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /src/zcash/; cd /src/zcash; \
     git clone ${ZCASH_URL} zcash && cd zcash && git checkout ${ZCASH_VERSION} && \
