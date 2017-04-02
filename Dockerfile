@@ -1,6 +1,8 @@
 FROM debian:jessie
 MAINTAINER kost - https://github.com/kost
 
+ADD ./entrypoint.sh /entrypoint.sh
+
 ENV	ZCASH_URL=https://github.com/zcash/zcash.git \
 	ZCASH_VERSION=v1.0.8 \
 	ZCASH_CONF=/home/zcash/.zcash/zcash.conf
@@ -52,3 +54,5 @@ RUN echo "rpcuser=zcash" > ${ZCASH_CONF} && \
 	echo "Success"
 
 VOLUME ["/home/zcash/.zcash"]
+
+ENTRYPOINT /entrypoint.sh
