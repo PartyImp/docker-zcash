@@ -32,7 +32,7 @@ RUN apt-get autoclean && apt-get autoremove && apt-get update && \
         wget \
         zlib1g-dev \
     ' && \
-    apt-get -qqy install --no-install-recommends build-essential \
+    apt-get -qqy install --no-install-recommends \
         $build_deps tor && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /src/zcash/; cd /src/zcash; \
