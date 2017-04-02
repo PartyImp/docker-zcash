@@ -14,7 +14,7 @@ RUN apt-get autoclean && apt-get autoremove && apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /src/zcash/; cd /src/zcash; \
     git clone ${ZCASH_URL} zcash && cd zcash && git checkout ${ZCASH_VERSION} && \
-    ./zcutil/fetch-params.sh && ./zcutil/build.sh -j4 && cd /src/zcash/zcash/src && \
+    ./zcutil/fetch-params.sh && ./zcutil/build.sh -j$(nproc) && cd /src/zcash/zcash/src && \
     /usr/bin/install -c zcash-tx zcashd zcash-cli zcash-gtest -t /usr/local/bin/ && \
     rm -rf /src/zcash/ && \
     adduser --uid 1000 --system zcash && \
