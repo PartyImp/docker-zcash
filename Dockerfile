@@ -49,7 +49,6 @@ RUN apt-get autoclean && apt-get autoremove && apt-get update && \
 USER zcash
 RUN echo "rpcuser=zcash" > ${ZCASH_CONF} && \
 	echo "rpcpassword=`pwgen 20 1`" >> ${ZCASH_CONF} && \
-	echo "addnode=mainnet.z.cash" >> ${ZCASH_CONF} && \
 	echo "Success"
 
 VOLUME ["/home/zcash/.zcash"]
