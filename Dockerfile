@@ -10,7 +10,7 @@ RUN apt-get autoclean && apt-get autoremove && apt-get update && \
     automake ncurses-dev libcurl4-openssl-dev libssl-dev libgtest-dev \
     make autoconf libtool apt-utils pkg-config libc6-dev \
     libcurl3-dev libudev-dev m4 g++-multilib unzip git python zlib1g-dev \
-    wget ca-certificates pwgen bsdmainutils && \
+    wget ca-certificates pwgen bsdmainutils tor && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /src/zcash/; cd /src/zcash; \
     git clone ${ZCASH_URL} zcash && cd zcash && git checkout ${ZCASH_VERSION} && \
