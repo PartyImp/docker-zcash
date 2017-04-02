@@ -6,11 +6,35 @@ ENV	ZCASH_URL=https://github.com/zcash/zcash.git \
 	ZCASH_CONF=/home/zcash/.zcash/zcash.conf
 
 RUN apt-get autoclean && apt-get autoremove && apt-get update && \
+    build_deps='\
+        apt-utils \
+        autoconf \
+        automake \
+        bsdmainutils \
+        build-essential \
+        ca-certificates \
+        git \
+        g++-multilib \
+        libc6-dev \
+        libcurl3-dev \
+        libcurl4-openssl-dev \
+        libgtest-dev \
+        libssl-dev \
+        libtool \
+        libudev-dev \
+        m4 \
+        make \
+        ncurses-dev \
+        pkg-config \
+        pwgen \
+        python \
+        tor \
+        unzip \
+        wget \
+        zlib1g-dev \
+    ' && \
     apt-get -qqy install --no-install-recommends build-essential \
-    automake ncurses-dev libcurl4-openssl-dev libssl-dev libgtest-dev \
-    make autoconf libtool apt-utils pkg-config libc6-dev \
-    libcurl3-dev libudev-dev m4 g++-multilib unzip git python zlib1g-dev \
-    wget ca-certificates pwgen bsdmainutils tor && \
+        $build_deps && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /src/zcash/; cd /src/zcash; \
     git clone ${ZCASH_URL} zcash && cd zcash && git checkout ${ZCASH_VERSION} && \
@@ -21,6 +45,7 @@ RUN apt-get autoclean && apt-get autoremove && apt-get update && \
     mv /root/.zcash-params /home/zcash/ && \ 
     mkdir -p /home/zcash/.zcash/ && \
     chown -R zcash /home/zcash && \
+    apt-get purge -y --auto-remove $build_deps && \
     echo "Success"
 
 USER zcash
