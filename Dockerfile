@@ -4,8 +4,7 @@ MAINTAINER kost - https://github.com/kost
 ADD ./entrypoint.sh /entrypoint.sh
 
 ENV	ZCASH_URL=https://github.com/zcash/zcash.git \
-	ZCASH_VERSION=v1.0.8 \
-	ZCASH_CONF=/home/zcash/.zcash/zcash.conf
+	  ZCASH_VERSION=v1.0.8
 
 RUN apt-get autoclean && apt-get autoremove && apt-get update && \
     build_deps='\
@@ -29,7 +28,6 @@ RUN apt-get autoclean && apt-get autoremove && apt-get update && \
         ncurses-dev \
         pkg-config \
         python \
-        sudo \
         unzip \
         wget \
         zlib1g-dev \
@@ -42,12 +40,9 @@ RUN apt-get autoclean && apt-get autoremove && apt-get update && \
     ./zcutil/fetch-params.sh && ./zcutil/build.sh -j$(nproc) && cd /src/zcash/zcash/src && \
     /usr/bin/install -c zcash-tx zcashd zcash-cli zcash-gtest -t /usr/local/bin/ && \
     rm -rvf /src/zcash/ && \
-    adduser --uid 1000 --system zcash && \
+    useradd -m -s /bin/bash zcash && \
     mv /root/.zcash-params /home/zcash/ && \ 
-    mkdir -p /home/zcash/.zcash/ && \
-    chown -R zcash /home/zcash && \
-    sudo -iu zcash sh -c "echo rpcuser=zcash > ${ZCASH_CONF}" && \
-    sudo -iu zcash sh -c "echo rpcpassword=`pwgen 20 1` >> ${ZCASH_CONF}" && \
+    chown -vR zcash /home/zcash && \
     apt-get purge -y $build_deps
 
 USER zcash
