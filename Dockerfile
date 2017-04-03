@@ -38,7 +38,7 @@ RUN apt-get autoclean && apt-get autoremove && apt-get update && \
     mkdir -p /src/zcash/; cd /src/zcash; \
     git clone ${ZCASH_URL} zcash && cd zcash && git checkout ${ZCASH_VERSION} && \
     ./zcutil/fetch-params.sh && ./zcutil/build.sh --disable-tests -j$(nproc) && cd /src/zcash/zcash/src && \
-    /usr/bin/install -c zcash-tx zcashd zcash-cli zcash-gtest -t /usr/local/bin/ && \
+    /usr/bin/install -c zcashd zcash-cli -t /usr/local/bin/ && \
     rm -rvf /src/zcash/ && \
     useradd -m -s /bin/bash zcash && \
     mv /root/.zcash-params /home/zcash/ && \ 
