@@ -29,6 +29,7 @@ RUN apt-get autoclean && apt-get autoremove && apt-get update && \
         ncurses-dev \
         pkg-config \
         python \
+        sudo \
         unzip \
         wget \
         zlib1g-dev \
@@ -40,19 +41,15 @@ RUN apt-get autoclean && apt-get autoremove && apt-get update && \
     git clone ${ZCASH_URL} zcash && cd zcash && git checkout ${ZCASH_VERSION} && \
     ./zcutil/fetch-params.sh && ./zcutil/build.sh -j$(nproc) && cd /src/zcash/zcash/src && \
     /usr/bin/install -c zcash-tx zcashd zcash-cli zcash-gtest -t /usr/local/bin/ && \
-    rm -rf /src/zcash/ && \
+    rm -rvf /src/zcash/ && \
     adduser --uid 1000 --system zcash && \
     mv /root/.zcash-params /home/zcash/ && \ 
     mkdir -p /home/zcash/.zcash/ && \
     chown -R zcash /home/zcash && \
-    apt-get purge -y $build_deps && \
-    echo "Success"
+    sudo -iu zcash sh -c "echo rpcuser=zcash > ${ZCASH_CONF}" && \
+    sudo -iu zcash sh -c "echo rpcpassword=`pwgen 20 1` >> ${ZCASH_CONF}" && \
+    apt-get purge -y $build_deps
 
 USER zcash
-RUN echo "rpcuser=zcash" > ${ZCASH_CONF} && \
-	echo "rpcpassword=`pwgen 20 1`" >> ${ZCASH_CONF} && \
-	echo "Success"
-
 VOLUME ["/home/zcash/.zcash"]
-
 ENTRYPOINT /entrypoint.sh
