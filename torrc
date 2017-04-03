@@ -1,9 +1,0 @@
-
-# Torrc for zcashd
-Log info stdout
-SocksPort 127.0.0.1:9050 IsolateDestAddr
-ControlPort 127.0.0.1:9051
-
-# to generate this hash, run tor --hash-password <yourpw>
-# you have to pass it to zcashd with -torpassword=yourpw
-HashedControlPassword 16:264CC23D9FABE27760CA105C124BF41D95BE58696E189B6C9CBB37E6BB # example
