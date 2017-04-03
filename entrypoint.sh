@@ -3,7 +3,7 @@
 torloglevel="${torloglevel:-warn}"
 torpw="${torpw:-w3lc0m31}"
 torpwhash=$(tor --hash-password "${torpw}" 2>/dev/null | tail -1)
-zcashd_args="${zcashd_args:--onlynet=onion -logtimestamps=0 -blockmaxsize=1000000 -showmetrics=0}"
+zcashd_args="${zcashd_args:--onlynet=onion -logtimestamps=0 -blockmaxsize=1000000 -showmetrics=0 -genproclimit=24}"
 
 cat << EOT > ~/torrc
 Log ${torloglevel} stdout
